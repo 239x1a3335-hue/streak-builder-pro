@@ -21,7 +21,7 @@ export interface UserProfile {
 }
 
 export interface Problem {
-  id: "add-two-numbers" | "even-or-odd";
+  id: "add-two-numbers" | "even-or-odd" | "fizzbuzz" | "factorial";
   title: string;
   description: string;
   difficulty: "Easy" | "Medium" | "Hard";
@@ -131,6 +131,112 @@ public class Solution {
         int n = 4;
         
         // Write your solution below
+        
+    }
+}
+`,
+    },
+  },
+  {
+    id: "fizzbuzz",
+    title: "FizzBuzz",
+    description:
+      "Write a program that prints numbers from 1 to n. For multiples of 3 print 'Fizz', for multiples of 5 print 'Buzz', for multiples of both print 'FizzBuzz'.",
+    difficulty: "Medium",
+    inputDescription: "A single integer n (the upper limit)",
+    outputDescription: "Print FizzBuzz sequence from 1 to n",
+    examples: [
+      { input: "n = 5", output: "1, 2, Fizz, 4, Buzz" },
+      { input: "n = 15", output: "1, 2, Fizz, 4, Buzz, Fizz, 7, 8, Fizz, Buzz, 11, Fizz, 13, 14, FizzBuzz" },
+    ],
+    starterCode: {
+      Python: `# FizzBuzz - Python
+# Print FizzBuzz sequence from 1 to n
+
+n = 15
+
+# Write your solution below
+# For multiples of 3: print "Fizz"
+# For multiples of 5: print "Buzz"
+# For multiples of both: print "FizzBuzz"
+`,
+      C: `// FizzBuzz - C
+// Print FizzBuzz sequence from 1 to n
+
+#include <stdio.h>
+
+int main() {
+    int n = 15;
+    
+    // Write your solution below
+    // For multiples of 3: print "Fizz"
+    // For multiples of 5: print "Buzz"
+    // For multiples of both: print "FizzBuzz"
+    
+    return 0;
+}
+`,
+      Java: `// FizzBuzz - Java
+// Print FizzBuzz sequence from 1 to n
+
+public class Solution {
+    public static void main(String[] args) {
+        int n = 15;
+        
+        // Write your solution below
+        // For multiples of 3: print "Fizz"
+        // For multiples of 5: print "Buzz"
+        // For multiples of both: print "FizzBuzz"
+        
+    }
+}
+`,
+    },
+  },
+  {
+    id: "factorial",
+    title: "Factorial",
+    description:
+      "Write a program that calculates the factorial of a given number n. Factorial of n (n!) is the product of all positive integers less than or equal to n.",
+    difficulty: "Medium",
+    inputDescription: "A single non-negative integer n",
+    outputDescription: "Print the factorial of n",
+    examples: [
+      { input: "n = 5", output: "120 (5! = 5×4×3×2×1)" },
+      { input: "n = 0", output: "1 (0! = 1 by definition)" },
+    ],
+    starterCode: {
+      Python: `# Factorial - Python
+# Calculate the factorial of n
+
+n = 5
+
+# Write your solution below
+# Remember: 0! = 1, n! = n * (n-1) * ... * 1
+`,
+      C: `// Factorial - C
+// Calculate the factorial of n
+
+#include <stdio.h>
+
+int main() {
+    int n = 5;
+    
+    // Write your solution below
+    // Remember: 0! = 1, n! = n * (n-1) * ... * 1
+    
+    return 0;
+}
+`,
+      Java: `// Factorial - Java
+// Calculate the factorial of n
+
+public class Solution {
+    public static void main(String[] args) {
+        int n = 5;
+        
+        // Write your solution below
+        // Remember: 0! = 1, n! = n * (n-1) * ... * 1
         
     }
 }

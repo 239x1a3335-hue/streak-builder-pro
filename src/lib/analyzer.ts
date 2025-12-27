@@ -23,6 +23,9 @@ const syntaxPatterns = {
     variable: /\w+\s*=/,
     function: /def\s+\w+/,
     comparison: /==|!=|<=|>=|<|>/,
+    loop: /for\s+|while\s+/,
+    multiplication: /\*/,
+    range: /range\s*\(/,
   },
   C: {
     output: /printf\s*\(/,
@@ -30,10 +33,12 @@ const syntaxPatterns = {
     modulo: /%/,
     conditional: /if\s*\(/,
     input: /scanf\s*\(/,
-    variable: /int\s+\w+|float\s+\w+|char\s+\w+/,
+    variable: /int\s+\w+|float\s+\w+|char\s+\w+|long\s+\w+/,
     function: /void\s+\w+|int\s+\w+\s*\(/,
     comparison: /==|!=|<=|>=|<|>/,
     main: /int\s+main\s*\(/,
+    loop: /for\s*\(|while\s*\(/,
+    multiplication: /\*/,
   },
   Java: {
     output: /System\.out\.println\s*\(|System\.out\.print\s*\(/,
@@ -41,10 +46,12 @@ const syntaxPatterns = {
     modulo: /%/,
     conditional: /if\s*\(/,
     input: /Scanner|nextInt|nextLine/,
-    variable: /int\s+\w+|String\s+\w+|double\s+\w+/,
+    variable: /int\s+\w+|String\s+\w+|double\s+\w+|long\s+\w+/,
     function: /public\s+static|void\s+\w+/,
     comparison: /==|!=|<=|>=|<|>/,
     class: /class\s+\w+/,
+    loop: /for\s*\(|while\s*\(/,
+    multiplication: /\*/,
   },
 };
 
@@ -60,6 +67,8 @@ const detectTopics = (code: string, language: Language): string[] => {
   if (patterns.input?.test(code)) topics.push("Input Handling");
   if (patterns.variable?.test(code)) topics.push("Variable Declaration");
   if (patterns.comparison?.test(code)) topics.push("Comparison Operators");
+  if (patterns.loop?.test(code)) topics.push("Loops");
+  if (patterns.multiplication?.test(code)) topics.push("Multiplication");
 
   return topics.length > 0 ? topics : ["Basic Syntax"];
 };
@@ -117,6 +126,52 @@ const getEvenOddRequirements = (language: Language): ProblemRequirements => {
   }
 };
 
+const getFizzBuzzRequirements = (language: Language): ProblemRequirements => {
+  switch (language) {
+    case "Python":
+      return {
+        requiredPatterns: [/print\s*\(/, /%/, /if\s+/, /for\s+|while\s+/],
+        optionalPatterns: [/elif|else/, /range\s*\(/, /fizz|buzz/i],
+        problemType: "fizzbuzz",
+      };
+    case "C":
+      return {
+        requiredPatterns: [/printf\s*\(/, /%/, /if\s*\(/, /for\s*\(|while\s*\(/],
+        optionalPatterns: [/else/, /fizz|buzz/i],
+        problemType: "fizzbuzz",
+      };
+    case "Java":
+      return {
+        requiredPatterns: [/System\.out\.print/, /%/, /if\s*\(/, /for\s*\(|while\s*\(/],
+        optionalPatterns: [/else/, /fizz|buzz/i],
+        problemType: "fizzbuzz",
+      };
+  }
+};
+
+const getFactorialRequirements = (language: Language): ProblemRequirements => {
+  switch (language) {
+    case "Python":
+      return {
+        requiredPatterns: [/print\s*\(/, /\*/, /for\s+|while\s+|\w+\s*\(/],
+        optionalPatterns: [/range\s*\(/, /def\s+/, /return/],
+        problemType: "factorial",
+      };
+    case "C":
+      return {
+        requiredPatterns: [/printf\s*\(/, /\*/, /for\s*\(|while\s*\(/],
+        optionalPatterns: [/long/, /int\s+\w+\s*\(/],
+        problemType: "factorial",
+      };
+    case "Java":
+      return {
+        requiredPatterns: [/System\.out\.print/, /\*/, /for\s*\(|while\s*\(/],
+        optionalPatterns: [/long/, /static\s+\w+\s+\w+\s*\(/],
+        problemType: "factorial",
+      };
+  }
+};
+
 // Calculate accuracy based on pattern matching
 const calculateAccuracy = (
   code: string,
@@ -158,14 +213,23 @@ const generateFeedback = (
   language: Language,
   problemType: string
 ): string => {
+  const problemDescriptions: Record<string, string> = {
+    addition: "addition",
+    evenOdd: "even/odd check",
+    fizzbuzz: "FizzBuzz",
+    factorial: "factorial calculation",
+  };
+
+  const desc = problemDescriptions[problemType] || problemType;
+
   if (accuracy >= 85) {
-    return `Excellent work! Your ${language} code demonstrates strong understanding of ${topics.slice(0, 2).join(" and ")}. The logic is clean and well-structured. Keep up the great coding practice!`;
+    return `Excellent work! Your ${language} code demonstrates strong understanding of ${topics.slice(0, 2).join(" and ")}. The ${desc} logic is clean and well-structured. Keep up the great coding practice!`;
   } else if (accuracy >= 60) {
-    return `Good attempt! You've correctly implemented the core ${problemType === "addition" ? "addition" : "conditional"} logic. Consider adding proper input handling and ensuring all edge cases are covered. Your understanding of ${topics[0]} is solid.`;
+    return `Good attempt! You've correctly implemented core ${desc} logic. Consider adding proper input handling and ensuring all edge cases are covered. Your understanding of ${topics[0]} is solid.`;
   } else if (accuracy >= 40) {
-    return `You're on the right track! The basic structure is there, but some key elements are missing. Focus on implementing the complete ${problemType === "addition" ? "addition operation" : "modulo check for even/odd"}. Review ${language} syntax for output statements.`;
+    return `You're on the right track! The basic structure is there, but some key elements are missing. Focus on implementing the complete ${desc} operation. Review ${language} syntax for loops and conditions.`;
   } else {
-    return `Keep practicing! Your code needs more work on the core logic. Make sure to include ${problemType === "addition" ? "the addition operator (+) and print statement" : "the modulo operator (%) and conditional check"}. Don't give up - every expert was once a beginner!`;
+    return `Keep practicing! Your code needs more work on the core logic. Make sure to include the essential operators and control structures for ${desc}. Don't give up - every expert was once a beginner!`;
   }
 };
 
@@ -175,14 +239,19 @@ const generateRecommendation = (
   topics: string[],
   problemType: string
 ): string => {
+  const nextProblems: Record<string, string> = {
+    addition: "Try the Even or Odd problem next to practice conditional statements!",
+    evenOdd: "Try the FizzBuzz problem to combine loops with conditionals!",
+    fizzbuzz: "Try the Factorial problem to practice loops and multiplication!",
+    factorial: "Great job! You've completed all problems. Try optimizing your solutions or exploring recursion.",
+  };
+
   if (accuracy >= 85) {
-    return problemType === "addition"
-      ? "Try the Even or Odd problem next to practice conditional statements!"
-      : "Explore more complex problems involving loops and arrays. Consider learning about functions and modular programming.";
+    return nextProblems[problemType] || "Explore more complex problems involving data structures and algorithms.";
   } else if (accuracy >= 60) {
     return `Strengthen your understanding of ${topics[0]}. Try rewriting the solution with different approaches to deepen your knowledge.`;
   } else if (accuracy >= 40) {
-    return `Review the basics of ${problemType === "addition" ? "arithmetic operators" : "conditional statements and modulo operator"}. Practice with simpler examples before attempting this problem again.`;
+    return `Review the basics of ${problemType === "fizzbuzz" ? "loops and conditionals" : problemType === "factorial" ? "loops and multiplication" : "operators and conditions"}. Practice with simpler examples before attempting this problem again.`;
   } else {
     return `Start with basic syntax tutorials for your chosen language. Focus on understanding print statements, variables, and basic operators before solving problems.`;
   }
@@ -199,13 +268,26 @@ const determineStatus = (accuracy: number): SubmissionStatus => {
 export const analyzeCode = (
   code: string,
   language: Language,
-  problemId: "add-two-numbers" | "even-or-odd"
+  problemId: "add-two-numbers" | "even-or-odd" | "fizzbuzz" | "factorial"
 ): AnalysisResult => {
   // Get problem-specific requirements
-  const requirements =
-    problemId === "add-two-numbers"
-      ? getAddTwoNumbersRequirements(language)
-      : getEvenOddRequirements(language);
+  let requirements: ProblemRequirements;
+  switch (problemId) {
+    case "add-two-numbers":
+      requirements = getAddTwoNumbersRequirements(language);
+      break;
+    case "even-or-odd":
+      requirements = getEvenOddRequirements(language);
+      break;
+    case "fizzbuzz":
+      requirements = getFizzBuzzRequirements(language);
+      break;
+    case "factorial":
+      requirements = getFactorialRequirements(language);
+      break;
+    default:
+      requirements = getAddTwoNumbersRequirements(language);
+  }
 
   // Detect topics used in code
   const topics = detectTopics(code, language);
