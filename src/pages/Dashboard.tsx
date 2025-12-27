@@ -17,6 +17,7 @@ import {
   ChevronRight,
   Loader2,
   Info,
+  Users,
 } from "lucide-react";
 
 const languages: Language[] = ["Python", "C", "Java"];
@@ -71,7 +72,15 @@ const Dashboard = () => {
           </div>
 
           <div className="flex items-center gap-4">
-            <div className="hidden sm:flex items-center gap-2 px-4 py-2 rounded-lg bg-muted">
+            <Button
+              variant="outline"
+              onClick={() => navigate("/leaderboard")}
+              className="hidden sm:flex items-center gap-2"
+            >
+              <Users className="w-4 h-4" />
+              Leaderboard
+            </Button>
+            <div className="hidden md:flex items-center gap-2 px-4 py-2 rounded-lg bg-muted">
               <span className="text-sm text-muted-foreground">Welcome,</span>
               <span className="font-medium text-foreground">{userProfile.name}</span>
             </div>
