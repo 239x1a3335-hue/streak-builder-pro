@@ -75,6 +75,14 @@ const Dashboard = () => {
           <div className="flex items-center gap-2 sm:gap-4">
             <Button
               variant="outline"
+              size="icon"
+              onClick={() => navigate("/leaderboard")}
+              className="sm:hidden"
+            >
+              <Users className="w-4 h-4" />
+            </Button>
+            <Button
+              variant="outline"
               onClick={() => navigate("/leaderboard")}
               className="hidden sm:flex items-center gap-2"
             >
