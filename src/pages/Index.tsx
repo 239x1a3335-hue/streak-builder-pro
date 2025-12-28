@@ -2,6 +2,7 @@
 import { Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { Code, Flame, Trophy, Mail, ChevronRight, Users, Zap, BarChart3 } from "lucide-react";
+import { ThemeToggle } from "@/components/ThemeToggle";
 
 const Index = () => {
   return (
@@ -17,6 +18,7 @@ const Index = () => {
               <span className="text-xl font-bold text-foreground">CodeChef Lite</span>
             </div>
             <div className="flex items-center gap-3">
+              <ThemeToggle />
               <Link to="/auth">
                 <Button variant="ghost" size="sm">Login</Button>
               </Link>
