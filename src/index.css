@@ -6,6 +6,65 @@
 
 @layer base {
   :root {
+    --background: 0 0% 98%;
+    --foreground: 222 47% 11%;
+
+    --card: 0 0% 100%;
+    --card-foreground: 222 47% 11%;
+
+    --popover: 0 0% 100%;
+    --popover-foreground: 222 47% 11%;
+
+    --primary: 32 95% 50%;
+    --primary-foreground: 0 0% 100%;
+
+    --secondary: 220 14% 92%;
+    --secondary-foreground: 222 47% 11%;
+
+    --muted: 220 14% 96%;
+    --muted-foreground: 220 9% 46%;
+
+    --accent: 217 91% 60%;
+    --accent-foreground: 0 0% 100%;
+
+    --destructive: 0 84% 60%;
+    --destructive-foreground: 0 0% 100%;
+
+    --border: 220 13% 87%;
+    --input: 220 13% 91%;
+    --ring: 32 95% 50%;
+
+    --radius: 0.75rem;
+
+    --streak-glow: 32 100% 50%;
+    --streak-fire: 25 100% 50%;
+    --success: 142 76% 36%;
+    --warning: 45 93% 47%;
+    --info: 217 91% 60%;
+
+    --gradient-primary: linear-gradient(135deg, hsl(32, 95%, 50%), hsl(25, 100%, 50%));
+    --gradient-dark: linear-gradient(180deg, hsl(220, 14%, 96%), hsl(220, 14%, 92%));
+    --gradient-card: linear-gradient(145deg, hsl(0, 0%, 100%), hsl(220, 14%, 98%));
+    --gradient-streak: linear-gradient(135deg, hsl(32, 100%, 55%), hsl(15, 100%, 50%));
+    
+    --shadow-glow: 0 0 40px hsl(32 95% 50% / 0.2);
+    --shadow-card: 0 4px 20px hsl(220 13% 50% / 0.1);
+    --shadow-button: 0 4px 14px hsl(32 95% 50% / 0.3);
+
+    --font-mono: 'JetBrains Mono', monospace;
+    --font-sans: 'Inter', sans-serif;
+
+    --sidebar-background: 0 0% 98%;
+    --sidebar-foreground: 222 47% 11%;
+    --sidebar-primary: 32 95% 50%;
+    --sidebar-primary-foreground: 0 0% 100%;
+    --sidebar-accent: 220 14% 92%;
+    --sidebar-accent-foreground: 222 47% 11%;
+    --sidebar-border: 220 13% 87%;
+    --sidebar-ring: 32 95% 50%;
+  }
+
+  .dark {
     --background: 222 47% 6%;
     --foreground: 210 40% 98%;
 
@@ -34,8 +93,6 @@
     --input: 217 33% 17%;
     --ring: 32 95% 55%;
 
-    --radius: 0.75rem;
-
     --streak-glow: 32 100% 50%;
     --streak-fire: 25 100% 50%;
     --success: 142 76% 45%;
@@ -51,9 +108,6 @@
     --shadow-card: 0 8px 32px hsl(0 0% 0% / 0.4);
     --shadow-button: 0 4px 14px hsl(32 95% 55% / 0.4);
 
-    --font-mono: 'JetBrains Mono', monospace;
-    --font-sans: 'Inter', sans-serif;
-
     --sidebar-background: 222 47% 8%;
     --sidebar-foreground: 210 40% 98%;
     --sidebar-primary: 32 95% 55%;
@@ -62,11 +116,6 @@
     --sidebar-accent-foreground: 210 40% 98%;
     --sidebar-border: 217 33% 20%;
     --sidebar-ring: 32 95% 55%;
-  }
-
-  .dark {
-    --background: 222 47% 6%;
-    --foreground: 210 40% 98%;
   }
 }
 

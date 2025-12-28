@@ -7,6 +7,7 @@ import { problems } from "@/lib/types";
 import { getStreakStatus, formatStreakDisplay } from "@/lib/streak";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
+import { ThemeToggle } from "@/components/ThemeToggle";
 import {
   Flame,
   Trophy,
@@ -71,7 +72,7 @@ const Dashboard = () => {
             <span className="text-xl font-bold text-foreground">CodeChef Lite</span>
           </div>
 
-          <div className="flex items-center gap-4">
+          <div className="flex items-center gap-2 sm:gap-4">
             <Button
               variant="outline"
               onClick={() => navigate("/leaderboard")}
@@ -84,6 +85,7 @@ const Dashboard = () => {
               <span className="text-sm text-muted-foreground">Welcome,</span>
               <span className="font-medium text-foreground">{userProfile.name}</span>
             </div>
+            <ThemeToggle />
             <Button variant="ghost" size="icon" onClick={handleLogout}>
               <LogOut className="w-5 h-5" />
             </Button>
