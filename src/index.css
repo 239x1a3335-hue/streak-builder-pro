@@ -294,3 +294,16 @@
   animation: fadeIn 0.5s ease-out 0.3s forwards;
   opacity: 0;
 }
+
+@keyframes spinSlow {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.animate-spin-slow {
+  animation: spinSlow 3s linear infinite;
+}

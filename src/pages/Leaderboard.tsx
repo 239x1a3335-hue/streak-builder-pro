@@ -1,12 +1,13 @@
 // Leaderboard Page for CodeChef Lite
 import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { ref, get, query, orderByChild, limitToLast } from "firebase/database";
+import { ref, get, onValue } from "firebase/database";
 import { database } from "@/lib/firebase";
 import { useAuth } from "@/contexts/AuthContext";
 import { UserProfile } from "@/lib/types";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { ThemeToggle } from "@/components/ThemeToggle";
 import {
   Flame,
   Trophy,
@@ -17,6 +18,7 @@ import {
   TrendingUp,
   Loader2,
   Users,
+  RefreshCw,
 } from "lucide-react";
 
 interface LeaderboardUser {
@@ -34,6 +36,7 @@ const Leaderboard = () => {
   const [users, setUsers] = useState<LeaderboardUser[]>([]);
   const [loading, setLoading] = useState(true);
   const [sortBy, setSortBy] = useState<"streak" | "problems" | "accuracy">("streak");
+  const [lastUpdated, setLastUpdated] = useState<Date | null>(null);
 
   // Redirect if not logged in
   useEffect(() => {
@@ -42,36 +45,36 @@ const Leaderboard = () => {
     }
   }, [user, authLoading, navigate]);
 
-  // Fetch leaderboard data
+  // Real-time leaderboard subscription
   useEffect(() => {
-    const fetchLeaderboard = async () => {
-      try {
-        const usersRef = ref(database, "users");
-        const snapshot = await get(usersRef);
-        
-        if (snapshot.exists()) {
-          const usersData: LeaderboardUser[] = [];
-          snapshot.forEach((child) => {
-            const userData = child.val() as UserProfile;
-            usersData.push({
-              uid: child.key || "",
-              name: userData.name,
-              currentStreak: userData.currentStreak || 0,
-              bestStreak: userData.bestStreak || 0,
-              problemsSolved: userData.problemsSolved || 0,
-              avgAccuracy: userData.avgAccuracy || 0,
-            });
+    const usersRef = ref(database, "users");
+    
+    // Set up real-time listener
+    const unsubscribe = onValue(usersRef, (snapshot) => {
+      if (snapshot.exists()) {
+        const usersData: LeaderboardUser[] = [];
+        snapshot.forEach((child) => {
+          const userData = child.val() as UserProfile;
+          usersData.push({
+            uid: child.key || "",
+            name: userData.name,
+            currentStreak: userData.currentStreak || 0,
+            bestStreak: userData.bestStreak || 0,
+            problemsSolved: userData.problemsSolved || 0,
+            avgAccuracy: userData.avgAccuracy || 0,
           });
-          setUsers(usersData);
-        }
-      } catch (error) {
-        console.error("Error fetching leaderboard:", error);
-      } finally {
-        setLoading(false);
+        });
+        setUsers(usersData);
+        setLastUpdated(new Date());
       }
-    };
+      setLoading(false);
+    }, (error) => {
+      console.error("Error fetching leaderboard:", error);
+      setLoading(false);
+    });
 
-    fetchLeaderboard();
+    // Cleanup subscription on unmount
+    return () => unsubscribe();
   }, []);
 
   // Sort users based on selected criteria
@@ -142,6 +145,7 @@ const Leaderboard = () => {
               <span className="text-lg font-bold text-foreground">CodeChef Lite</span>
             </div>
           </div>
+          <ThemeToggle />
         </div>
       </header>
 
@@ -157,6 +161,12 @@ const Leaderboard = () => {
           <p className="text-muted-foreground">
             Top coders ranked by their performance
           </p>
+          {lastUpdated && (
+            <div className="flex items-center justify-center gap-2 mt-3 text-xs text-muted-foreground">
+              <RefreshCw className="w-3 h-3 animate-spin-slow" />
+              <span>Live updates • Last synced: {lastUpdated.toLocaleTimeString()}</span>
+            </div>
+          )}
         </div>
 
         {/* Sort Options */}
