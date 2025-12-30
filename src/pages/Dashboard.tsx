@@ -26,6 +26,7 @@ import {
   CheckCircle2,
   Clock,
   XCircle,
+  BookOpen,
 } from "lucide-react";
 
 const languages: Language[] = ["Python", "C", "Java"];
@@ -36,7 +37,7 @@ const languageIcons: Record<Language, string> = {
   Java: "☕",
 };
 
-type NavSection = "problems" | "submissions" | "profile";
+type NavSection = "problems" | "submissions" | "roadmaps" | "profile";
 
 const Dashboard = () => {
   const { user, userProfile, loading, logOut, updateLanguage } = useAuth();
@@ -74,6 +75,7 @@ const Dashboard = () => {
   const navItems = [
     { id: "problems" as NavSection, label: "Problems", icon: Code2 },
     { id: "submissions" as NavSection, label: "Submissions", icon: FileText },
+    { id: "roadmaps" as NavSection, label: "Roadmaps", icon: BookOpen },
     { id: "profile" as NavSection, label: "Profile", icon: User },
   ];
 
@@ -218,6 +220,73 @@ const Dashboard = () => {
           </Button>
         </div>
       )}
+    </div>
+  );
+
+  // Render Roadmaps Section
+  const renderRoadmaps = () => (
+    <div className="animate-fade-in">
+      <h2 className="text-xl font-semibold text-foreground mb-6 flex items-center gap-2">
+        <BookOpen className="w-5 h-5 text-primary" />
+        Learning Roadmaps
+      </h2>
+      
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+        {/* DSA Roadmap Card */}
+        <Card className="bg-card border-border hover:border-primary/50 transition-colors cursor-pointer group">
+          <CardContent className="p-6" onClick={() => navigate("/roadmaps")}>
+            <div className="flex items-center gap-4 mb-4">
+              <div className="p-3 rounded-xl bg-primary/20 group-hover:scale-110 transition-transform">
+                <Code2 className="w-8 h-8 text-primary" />
+              </div>
+              <div>
+                <h3 className="text-xl font-bold text-foreground">DSA Roadmap</h3>
+                <p className="text-sm text-muted-foreground">Data Structures & Algorithms</p>
+              </div>
+            </div>
+            <p className="text-muted-foreground mb-4">
+              Master arrays, trees, graphs, dynamic programming, and more with our structured learning path.
+            </p>
+            <div className="flex flex-wrap gap-2">
+              <span className="px-2 py-1 rounded text-xs bg-primary/10 text-primary">Arrays</span>
+              <span className="px-2 py-1 rounded text-xs bg-primary/10 text-primary">Trees</span>
+              <span className="px-2 py-1 rounded text-xs bg-primary/10 text-primary">Graphs</span>
+              <span className="px-2 py-1 rounded text-xs bg-primary/10 text-primary">DP</span>
+            </div>
+          </CardContent>
+        </Card>
+
+        {/* FSD Roadmap Card */}
+        <Card className="bg-card border-border hover:border-accent/50 transition-colors cursor-pointer group">
+          <CardContent className="p-6" onClick={() => navigate("/roadmaps")}>
+            <div className="flex items-center gap-4 mb-4">
+              <div className="p-3 rounded-xl bg-accent/20 group-hover:scale-110 transition-transform">
+                <Target className="w-8 h-8 text-accent" />
+              </div>
+              <div>
+                <h3 className="text-xl font-bold text-foreground">FSD Roadmap</h3>
+                <p className="text-sm text-muted-foreground">Full Stack Development</p>
+              </div>
+            </div>
+            <p className="text-muted-foreground mb-4">
+              Learn frontend, backend, databases, and deployment with our complete full-stack guide.
+            </p>
+            <div className="flex flex-wrap gap-2">
+              <span className="px-2 py-1 rounded text-xs bg-accent/10 text-accent">React</span>
+              <span className="px-2 py-1 rounded text-xs bg-accent/10 text-accent">Node.js</span>
+              <span className="px-2 py-1 rounded text-xs bg-accent/10 text-accent">Database</span>
+              <span className="px-2 py-1 rounded text-xs bg-accent/10 text-accent">DevOps</span>
+            </div>
+          </CardContent>
+        </Card>
+      </div>
+
+      <div className="mt-6 text-center">
+        <Button onClick={() => navigate("/roadmaps")} className="flex items-center gap-2 mx-auto">
+          <BookOpen className="w-4 h-4" />
+          View Full Roadmaps
+        </Button>
+      </div>
     </div>
   );
 
@@ -461,6 +530,7 @@ const Dashboard = () => {
           {/* Dynamic Content */}
           {activeSection === "problems" && renderProblems()}
           {activeSection === "submissions" && renderSubmissions()}
+          {activeSection === "roadmaps" && renderRoadmaps()}
           {activeSection === "profile" && renderProfile()}
 
           {/* Footer */}
