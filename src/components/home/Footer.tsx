@@ -1,6 +1,7 @@
 import { Link } from "react-router-dom";
-import { Code, Github, Linkedin, Twitter, Instagram, Youtube, Mail } from "lucide-react";
+import { Github, Linkedin, Twitter, Instagram, Youtube, Mail } from "lucide-react";
 import { Button } from "@/components/ui/button";
+import gprecLogo from "@/assets/gprec-logo.png";
 
 const Footer = () => {
   const currentYear = new Date().getFullYear();
@@ -35,10 +36,8 @@ const Footer = () => {
           {/* Brand */}
           <div className="lg:col-span-1">
             <div className="flex items-center gap-2 mb-4">
-              <div className="w-10 h-10 bg-gradient-to-br from-primary to-primary/70 rounded-lg flex items-center justify-center">
-                <Code className="w-6 h-6 text-primary-foreground" />
-              </div>
-              <span className="text-xl font-bold text-foreground">CodeChef Lite</span>
+              <img src={gprecLogo} alt="GPREC CodeChef" className="w-10 h-10 object-contain" />
+              <span className="text-xl font-bold text-foreground">GPREC CodeChef</span>
             </div>
             <p className="text-muted-foreground text-sm mb-4">
               Empowering student developers to code, innovate, and build the future through practice, 
@@ -112,7 +111,7 @@ const Footer = () => {
         <div className="border-t border-border pt-8">
           <div className="flex flex-col sm:flex-row items-center justify-between gap-4">
             <p className="text-muted-foreground text-sm text-center sm:text-left">
-              © {currentYear} CodeChef Lite. All rights reserved.
+              © {currentYear} GPREC CodeChef. All rights reserved.
             </p>
             <p className="text-muted-foreground text-sm text-center sm:text-right">
               Built with ❤️ by Bathala Balaji & Kondreddy Vijaya

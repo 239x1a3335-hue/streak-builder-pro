@@ -1,6 +1,6 @@
 import { Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
-import { Code, Rocket, FolderOpen, LogIn, ChevronRight, Sparkles } from "lucide-react";
+import { Rocket, FolderOpen, LogIn, ChevronRight, Sparkles } from "lucide-react";
 
 const HeroSection = () => {
   return (
