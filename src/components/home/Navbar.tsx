@@ -2,7 +2,8 @@ import { useState } from "react";
 import { Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { ThemeToggle } from "@/components/ThemeToggle";
-import { Code, Menu, X, LogIn, UserPlus } from "lucide-react";
+import { Menu, X, LogIn, UserPlus } from "lucide-react";
+import gprecLogo from "@/assets/gprec-logo.png";
 
 const navLinks = [
   { name: "Events", href: "#events" },
@@ -22,10 +23,8 @@ const Navbar = () => {
         <div className="flex items-center justify-between h-16">
           {/* Logo */}
           <Link to="/" className="flex items-center gap-2">
-            <div className="w-10 h-10 bg-gradient-to-br from-primary to-primary/70 rounded-lg flex items-center justify-center">
-              <Code className="w-6 h-6 text-primary-foreground" />
-            </div>
-            <span className="text-xl font-bold text-foreground">CodeChef Lite</span>
+            <img src={gprecLogo} alt="GPREC CodeChef" className="w-10 h-10 object-contain" />
+            <span className="text-xl font-bold text-foreground">GPREC CodeChef</span>
           </Link>
 
           {/* Desktop Navigation */}
